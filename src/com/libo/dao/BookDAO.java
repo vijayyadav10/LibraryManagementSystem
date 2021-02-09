@@ -6,9 +6,9 @@ import com.libo.beans.Book;
 
 public interface BookDAO {
 
-	void addBook();
+	Book addBook(String bookName, String subjectName, String authorName, int pageNumber, long price);
 
-	Object removeBook();
+	Object removeBook(String bookName);
 	
 	List<Book> getBooks();
 

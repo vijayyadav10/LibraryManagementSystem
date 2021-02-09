@@ -12,56 +12,30 @@ import com.libo.services.BookServices;
 
 public class BookServiceImpl implements BookServices {
 
-	Library lib;
+	Library lib = Library.getObject();
 	BookDAO bookDao;
 
 	Scanner in = new Scanner(System.in);
 
-	public BookServiceImpl(Library lib, BookDAO bookDao) {
-		this.lib = lib;
+	public BookServiceImpl(BookDAO bookDao) {
+		
 		this.bookDao = bookDao;
 	}
 
 	@Override
-	public void addBook() {
-//		System.out.println("Enter Book Details");
-//		System.out.println("In Following Order: Book Name, Subject Name, Author Name, Page No, Price");
-//		System.out.println("Enter Book Name");
+	public Book addBook(String bookName, String subjectName, String authorName, int pageNumber, long price) {
 //		String bookName = in.nextLine();
 //		String subjectName = in.nextLine();
 //		String authorName = in.nextLine();
 //		int pageNumber = in.nextInt();
 //		long price = in.nextLong();
-//
-//		Book book = new Book(bookName, subjectName, authorName, pageNumber, price);
-//
-//		System.out.println(bookName);
-//
-//		List<Book> bookShelf = lib.getBookshell();
-//		bookShelf.add(book);
-//		lib.setBookshell(bookShelf);
-		this.bookDao.addBook();
+		return this.bookDao.addBook(bookName,subjectName, authorName, pageNumber, price);
+		
 	}
 
 	@Override
-	public Object removeBook() {
-//		bookName = "f#";
-//		System.out.println("Enter book name to delete from book shelf");
-//
-//		String bookName = in.nextLine();
-//
-//		List<Book> bookShelf = lib.getBookshell();
-//
-//		for (Book book : bookShelf) {
-//			if (bookName.equals(book.getBookName())) {
-//				bookShelf.remove(book);
-//				lib.setBookshell(bookShelf);
-//				return book;
-//			}
-//		}
-//		return "No Such Book Found";
-		return this.bookDao.removeBook();
-
+	public Object removeBook(String bookName) {
+		return this.bookDao.removeBook(bookName);
 	}
 
 	@Override
@@ -72,12 +46,12 @@ public class BookServiceImpl implements BookServices {
 	}
 
 	@Override
-	public Object SearchBookByName() {
+	public Object SearchBookByName(String bookName) {
 
-		System.out.println("Enter book name to search from book shelf");
+//		System.out.println("Enter book name to search from book shelf");
 
-		String bookName = in.nextLine();
-		System.out.println(bookName);
+//		String bookName = in.nextLine();
+//		System.out.println(bookName);
 		List<Book> bookShelf = lib.getBookshell();
 
 		for (Book book : bookShelf) {
@@ -90,11 +64,11 @@ public class BookServiceImpl implements BookServices {
 	}
 
 	@Override
-	public Object SearchBookByAuthor() {
+	public Object SearchBookByAuthor(String authorName) {
 
-		System.out.println("Enter author name to search from book shelf");
+//		System.out.println("Enter author name to search from book shelf");
 
-		String authorName = in.nextLine();
+//		String authorName = in.nextLine();
 
 		List<Book> bookShelf = lib.getBookshell();
 

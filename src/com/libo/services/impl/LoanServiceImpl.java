@@ -11,18 +11,17 @@ import com.libo.services.LoanServices;
 public class LoanServiceImpl implements LoanServices {
 
 	LoanDAO loanDao;
-	Library lib;
+	Library lib = Library.getObject();
 	Scanner in = new Scanner(System.in);
 
-	public LoanServiceImpl(Library lib, LoanDAO loanDao) {
-		this.lib = lib;
+	public LoanServiceImpl( LoanDAO loanDao) {
 		this.loanDao = loanDao;
 	}
 
 	@Override
-	public void addLoan() {
+	public void addLoan(int studentId, String studentName, String BookName) {
 
-		this.loanDao.addLoan();
+		this.loanDao.addLoan(studentId, studentName, BookName);
 
 	}
 

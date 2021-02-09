@@ -8,39 +8,33 @@ import com.libo.beans.Library;
 
 public class BookDAOImpl implements BookDAO {
 
-	Library lib;
+	Library lib = Library.getObject();
 	Scanner in = new Scanner(System.in);
 
-	public BookDAOImpl(Library lib) {
-		this.lib = lib;
+	public BookDAOImpl() {
 	}
 	
 	@Override
-	public void addBook() {
-		System.out.println("Enter Book Details");
-		System.out.println("In Following Order: Book Name, Subject Name, Author Name, Page No, Price");
-		System.out.println("Enter Book Name");
-		String bookName = in.nextLine();
-		String subjectName = in.nextLine();
-		String authorName = in.nextLine();
-		int pageNumber = in.nextInt();
-		long price = in.nextLong();
+	public Book addBook(String bookName, String subjectName, String authorName, int pageNumber, long price) {
 
-		Book book = new Book(bookName, subjectName, authorName, pageNumber, price);
-
-		System.out.println(bookName);
-
-		List<Book> bookShelf = lib.getBookshell();
-		bookShelf.add(book);
-		lib.setBookshell(bookShelf);
+		if(bookName.length() > 0 && subjectName != null && authorName != null && pageNumber > 0 && price > 0) {
+			
+			Book book = new Book(bookName, subjectName, authorName, pageNumber, price);
+			
+			System.out.println(bookName);
+			
+			List<Book> bookShelf = lib.getBookshell();
+			bookShelf.add(book);
+			lib.setBookshell(bookShelf);
+			return book;
+		}
 		
+		return null;
 	}
 
 	@Override
-	public Object removeBook() {
-		System.out.println("Enter book name to delete from book shelf");
-
-		String bookName = in.nextLine();
+	public Object removeBook(String bookName) {
+		
 
 		List<Book> bookShelf = lib.getBookshell();
 

@@ -7,6 +7,8 @@ import java.util.Queue;
 
 public class Library {
 
+	static Library obj = new Library(); 
+	
 	// Object realtion ship
 	private List<Book> bookshell = new ArrayList<Book>();
 	private List<Student> studentList = new ArrayList<Student>();
@@ -14,6 +16,16 @@ public class Library {
 	private List<Loan> bookIssuedList = new ArrayList<Loan>();
 
 	private Queue<String> bookOutOfStock = new LinkedList<String>();
+
+	private List<User> users = new ArrayList<User>();
+	
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 
 	public Queue<String> getBookOutOfStock() {
 		return bookOutOfStock;
@@ -23,7 +35,7 @@ public class Library {
 		this.bookOutOfStock = bookOutOfStock;
 	}
 
-	public Library() {
+	private Library() {
 		bookshell.add(new Book("java", "cs", "tom", 100, 20));
 		bookshell.add(new Book("f#", "computer programming", "mark", 200, 40));
 		bookshell.add(new Book("perl", "coding with perl", "john mike", 200, 270));
@@ -33,6 +45,10 @@ public class Library {
 		bookOutOfStock.add("mysql");
 	}
 
+	public static Library getObject() {
+		return obj;
+	}
+	
 	public List<Book> getBookshell() {
 		return bookshell;
 	}

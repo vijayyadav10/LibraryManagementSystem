@@ -5,7 +5,7 @@ import java.util.List;
 import com.libo.beans.User;
 
 public interface Validate {
-	Boolean login(List<User> users);
+	Boolean login(String username, String password);
 	
-	String authorizeUser(List<User> users);
+	String authorizeUser(String username, String password);
 }

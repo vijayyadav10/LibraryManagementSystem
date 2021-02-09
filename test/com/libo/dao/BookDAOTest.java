@@ -1,6 +1,8 @@
 package com.libo.dao;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -12,7 +14,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.libo.beans.Book;
-import com.libo.beans.Library;
 
 public class BookDAOTest {
 
@@ -26,28 +27,48 @@ public class BookDAOTest {
 
 	@Before
 	public void setUp() {
-		this.bookDao = new BookDAOImpl(new Library());
+		this.bookDao = new BookDAOImpl();
 	}
 
 	@Test
-	public void testGetBooks() {
+	public void TestGetBooks() {
 		this.bookList = this.bookDao.getBooks();
-		assertTrue("failure: size should be greater then 1", this.bookList.size() > 0);
 		assertNotNull("failure: book list should  not be null/empty", this.bookList);
 	}
 
 	@Test
-	public void testAddBook() {
-		assertTrue("failure: the size should be same as actual size", this.bookList.size() == 5);
-		bookDao.addBook();
-		assertTrue("failure: the size should be same as actual size", this.bookList.size() == 6);
+	public void Test_AddBook() {
+		assertTrue("failure: the size should be same as actual size", bookDao.getBooks().size() == 5);
+		bookDao.addBook("wordpress", "web desing", "vijay yadav", 200, 250);
+		assertTrue("failure: the size should be same as actual size", bookDao.getBooks().size() == 6);
 	}
 
 	@Test
-	public void testRemoveBook() {
-		assertTrue("failure: the size should be same as actual size", this.bookList.size() == 5);
-		bookDao.removeBook();
-		assertTrue("failure: the size should be 1 less then actual size", this.bookList.size() == 4);
+	public void TestAddBook_EmptyBookName_ReturnNull() {
+		assertNull(bookDao.addBook("", "web desing", "vijay yadav", 200, 3));
+	}
+
+	@Test
+	public void TestAddBook_FreeAmount_ReturnNull() {
+		assertNull(bookDao.addBook("", "web desing", "vijay yadav", 200, 3));
+	}
+
+	@Test
+	public void TestAddBook_ZeroPages_ReturnNull() {
+		assertNull(bookDao.addBook("", "web desing", "vijay yadav", 200, 3));
+	}
+
+	@Test
+	public void TestRemoveBook_UpdateSizeOfList() {
+		assertTrue("failure: the size should be same as actual size", bookDao.getBooks().size() == 6);
+		bookDao.removeBook("java");
+		assertTrue("failure: the size should be 1 less then actual size", bookDao.getBooks().size() == 5);
+	}
+
+	@Test
+	public void TestRemoveBook_BookNameThatNotExists_NoSuchBookFound() {
+		Object result = bookDao.removeBook("flask");
+		assertSame("No Such Book Found", result);
 	}
 
 	@After

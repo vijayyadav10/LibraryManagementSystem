@@ -6,7 +6,7 @@ import com.libo.beans.Loan;
 
 public interface LoanServices {
 
-	void addLoan();
+	void addLoan(int studentId, String studentName, String BookName);
 
 	Object removeLoan();
 	

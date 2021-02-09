@@ -10,22 +10,21 @@ import com.libo.beans.Loan;
 
 public class LoanDAOImpl implements LoanDAO {
 
-	Library lib;
+	Library lib = Library.getObject();
 	Scanner in = new Scanner(System.in);
 
-	public LoanDAOImpl(Library lib) {
-		this.lib = lib;
+	public LoanDAOImpl() {
 	}
 
 	@Override
-	public void addLoan() {
-		System.out.println("Enter you Student Id and Student Name and Book Name");
-
-		int studentId = in.nextInt();
-		in.nextLine();
-		String studentName = in.nextLine();
-
-		String bookName = in.nextLine();
+	public void addLoan(int studentId, String studentName, String bookName) {
+//		System.out.println("Enter you Student Id and Student Name and Book Name");
+//
+//		int studentId = in.nextInt();
+//		in.nextLine();
+//		String studentName = in.nextLine();
+//
+//		String bookName = in.nextLine();
 
 		Loan loan = new Loan(studentId, studentName, bookName);
 

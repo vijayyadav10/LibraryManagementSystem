@@ -1,5 +1,8 @@
 package com.libo;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -23,19 +26,23 @@ public class App {
 
 	private static final Logger LOGGER = Logger.getLogger(App.class.getName());
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
-		Scanner in = new Scanner(System.in);
+		int studentId;
+		int pageNumber;
+		long price;
 		String username;
 		String password;
-
-		Library lib = new Library();
-
-		BookServices bookImpl = new BookServiceImpl(lib, new BookDAOImpl(lib));
-		
-		LoanServices loanImpl = new LoanServiceImpl(lib, new LoanDAOImpl(lib));
-
+		String bookName;
+		String authorName;
+		String subjectName;
 		List menu = new ArrayList<String>();
+		Scanner in = new Scanner(System.in);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		Library lib = Library.getObject();
+		BookServices bookImpl = new BookServiceImpl(new BookDAOImpl());
+		LoanServices loanImpl = new LoanServiceImpl(new LoanDAOImpl());
+
 		menu.add("SHOW BOOK");
 		menu.add("ADD BOOK");
 		menu.add("REMOVE BOOK");
@@ -51,6 +58,7 @@ public class App {
 		Student bobby = new Student(33, "bobby", "dighi", "pune", "student");
 
 		List<User> users = List.of(admin, jay, shimona, bobby);
+		lib.setUsers(users);
 
 		Validate authenicate = new ValidateServiceImpl();
 
@@ -76,9 +84,12 @@ public class App {
 
 			case 1:
 
-				if (authenicate.login(users)) {
+				System.out.print("Enter your name and password ");
+				username = reader.readLine();
+				password = reader.readLine();
+				if (authenicate.login(username, password)) {
 
-					if ("ADMIN".equals(authenicate.authorizeUser(users))) {
+					if ("ADMIN".equals(authenicate.authorizeUser(username, password))) {
 
 						String[] authZ = { "1. Show Book", "2. Add Book", "3. Remove Book",
 								"4. GET BOOK BY AUTHOR NAME", "5. GET BOOK BY BOOK NAME", "6. GET LOANED RECORDS",
@@ -111,20 +122,35 @@ public class App {
 							case 2:
 
 								System.out.println("You've chosen item #2 ADD BOOK");
-								bookImpl.addBook();
+								System.out.println("Enter Book Details");
+								System.out.println(
+										"In Following Order: Book Name, Subject Name, Author Name, Page No, Price");
+
+								bookName = reader.readLine();
+								subjectName = reader.readLine();
+								authorName = reader.readLine();
+								pageNumber = Integer.parseInt(reader.readLine());
+								price = Long.parseLong(reader.readLine());
+
+								bookImpl.addBook(bookName, subjectName, authorName, pageNumber, price);
 
 								break;
 
 							case 3:
 
 								System.out.println("You've chosen item #3 Remove BOOK");
-								bookImpl.removeBook();
+								System.out.println("Enter book name to delete book from library");
+								String bookNameToDelete = reader.readLine();
+
+								bookImpl.removeBook(bookNameToDelete);
 								break;
 
 							case 4:
 
 								System.out.println("You've chosen item #4 Search Book By Author Name");
-								Object bookByAuthorName = bookImpl.SearchBookByAuthor();
+								System.out.println("Enter author name to his book");
+								authorName = reader.readLine();
+								Object bookByAuthorName = bookImpl.SearchBookByAuthor(authorName);
 								System.out.println(bookByAuthorName);
 
 								break;
@@ -132,7 +158,9 @@ public class App {
 							case 5:
 
 								System.out.println("You've chosen item #5 SEARCH BY BookName ");
-								Object bookByBookName = bookImpl.SearchBookByName();
+								System.out.println("Enter book name to search");
+								bookName = reader.readLine();
+								Object bookByBookName = bookImpl.SearchBookByName(bookName);
 								System.out.println(bookByBookName);
 
 								break;
@@ -147,8 +175,12 @@ public class App {
 							case 7:
 
 								System.out.println("You've chosen item #7 Assign Book To Student");
-								loanImpl.addLoan();
-								bookImpl.removeBook();
+								System.out.println("Enter you Student Id and Student Name and Book Name");
+								studentId = Integer.parseInt(reader.readLine());
+								String studentName = reader.readLine();
+								String bookNameToLoan = reader.readLine();
+								loanImpl.addLoan(studentId, studentName, bookNameToLoan);
+								bookImpl.removeBook(bookNameToLoan);
 
 								break;
 
@@ -174,7 +206,7 @@ public class App {
 						} while (!quits);
 					}
 
-					else if ("STUDENT".equals(authenicate.authorizeUser(users))) {
+					else if ("STUDENT".equals(authenicate.authorizeUser(username, password))) {
 						String[] authZZ = { "1. Show Books", "2. Search Book By Author Name",
 								"3. Search Book By Book Name", };
 
@@ -206,7 +238,9 @@ public class App {
 							case 2:
 
 								System.out.println("You've chosen item #2 SEARCH BY AuthorName");
-								Object bookByAuthorName = bookImpl.SearchBookByAuthor();
+								System.out.println("Enter author name to his book");
+								authorName = reader.readLine();
+								Object bookByAuthorName = bookImpl.SearchBookByAuthor(authorName);
 								System.out.println(bookByAuthorName);
 
 								break;
@@ -214,7 +248,9 @@ public class App {
 							case 3:
 
 								System.out.println("You've chosen item #3 SEARCH BY BookName ");
-								Object bookByBookName = bookImpl.SearchBookByName();
+								System.out.println("Enter book name to search");
+								bookName = reader.readLine();
+								Object bookByBookName = bookImpl.SearchBookByName(bookName);
 								System.out.println(bookByBookName);
 
 								break;

@@ -21,21 +21,23 @@ public class BookTest {
 	public void testGetBookName() {
 		assertEquals("failure: name should be ruby", "ruby", book.getBookName());
 		assertNotEquals("failure: name should be anything leaving ruby", "python", book.getBookName());
-		assertNotNull("failure: name should note be null",book.getBookName());
+		assertNotNull("failure: name should note be null", book.getBookName());
 	}
 
 	@Test
 	public void testBook() {
 		Book copyBook = new Book("ruby", "rubyonrails", "rubex", 300, 500);
-		assertSame("failure: something went wrong the object should be same",copyBook.getAuthorName(), book.getAuthorName());
-		assertSame("failure: something went wrong the object should be same", copyBook.getBookName(), book.getBookName());
-		assertEquals("failure: something went wrong the object should be same", copyBook.getPageNumber(), book.getPageNumber());
+		assertSame("failure: something went wrong the object should be same", copyBook.getAuthorName(),
+				book.getAuthorName());
+		assertSame("failure: something went wrong the object should be same", copyBook.getBookName(),
+				book.getBookName());
+		assertEquals("failure: something went wrong the object should be same", copyBook.getPageNumber(),
+				book.getPageNumber());
 		assertEquals("failure: something went wrong the object should be same", copyBook.getPrice(), book.getPrice());
 		assertSame("failure: something went wrong the object should be same", copyBook.getSubject(), book.getSubject());
 	}
 
-
-	//	@Test
+	// @Test
 //	public void testBookStringStringStringIntLong() {
 //		fail("Not yet implemented");
 //	}

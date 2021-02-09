@@ -10,15 +10,16 @@ import com.libo.beans.Library;
 
 public interface BookServices {
 
-	void addBook();
 
-	Object removeBook();
+	Book addBook(String bookName, String subjectName, String authorName, int pageNumber, long price);
+
+	Object removeBook(String bookName);
 	
 	List<Book> getBooks();
 
-	public Object SearchBookByName();
+	public Object SearchBookByName(String bookName);
 
-	public Object SearchBookByAuthor();
+	public Object SearchBookByAuthor(String authorName);
 	
 	void checkBookOutOfStock();
 }
